@@ -7,8 +7,10 @@ import { linkTo } from "@storybook/addon-links";
 import { Button, Welcome } from "@storybook/react/demo";
 
 import 'bootstrap/dist/css/bootstrap.css';
-
+import 'react-bootstrap-multiselect/css/bootstrap-multiselect.css'
 import MultiSelectDropDown from "../components/MultiSelectDropDown";
+
+const handleChange = (e) => console.log("Chnages!");
 
 storiesOf("Welcome", module).add("to Storybook", () => (
   <Welcome showApp={linkTo("Button")} />
@@ -23,16 +25,43 @@ storiesOf("Button", module)
   ));
 
 const list = [
-  { value: "One", selected: true },
-  { value: "Two" },
-  { value: "Three" },
-  { value: "Four", label: "Four Label" }
+  { key: 1, value: "One" },
+  { key: 2, value: "Two" },
+  { key: 3, value: "Three" },
+  { key: 4, value: "Four" }
 ];
-storiesOf("MultiSelectDropDown", module).add("simple list", () => (
+
+storiesOf("MultiSelectDropDown", module)
+.add("Simple list", () => (
   <MultiSelectDropDown
-    label="Empty dropdown"
+    label="Dropdown simple list 1"
     hidden={false}
     options={list}
-    initialValues={["c"]}
+    onChange={handleChange}
+  />
+))
+.add("Simple list, with item 3 checked", () => (
+  <MultiSelectDropDown
+    label="Dropdown simple list 2"
+    hidden={false}
+    options={list}
+    initialValues={[3]}
+  />
+))
+.add("Simple list, with items 1 and 3 checked", () => (
+  <MultiSelectDropDown
+    label="Dropdown simple list 3"
+    hidden={false}
+    options={list}
+    initialValues={[1,3]}
+  />
+))
+.add("Simple list, both key and value ar shown", () => (
+  <MultiSelectDropDown
+    label="Dropdown simple list 4"
+    hidden={false}
+    options={list}
+    initialValues={[1,3]}
+    showKey={true}
   />
 ));

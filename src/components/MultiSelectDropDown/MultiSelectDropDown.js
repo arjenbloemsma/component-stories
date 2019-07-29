@@ -4,8 +4,8 @@ import Multiselect from 'react-bootstrap-multiselect';
 const MultiSelectDropDown = ({ id, label, hidden, options, initialValues, ...rest }) => {
   const values = options.map(e => ({
     value: e.key,
-    label: e.value,
-    selected: initialValues.some(v => v.key === e.key),
+    label: !!rest.showKey ? `${e.key} - ${e.value}` : e.value,
+    selected: !!initialValues && initialValues.some(v => v && v === e.key),
   }));
   return (
     <div className='form-group row'>
