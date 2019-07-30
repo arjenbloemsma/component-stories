@@ -2,6 +2,7 @@ import React from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
+import { withConsole } from '@storybook/addon-console';
 import { linkTo } from "@storybook/addon-links";
 
 import { Button, Welcome } from "@storybook/react/demo";
@@ -24,6 +25,11 @@ storiesOf("Button", module)
     <Button onClick={action("clicked")}>😀 😎 👍 💯</Button>
   ));
 
+  storiesOf("Button", module)
+  .add("console test", () => (
+    <Button onClick={() => console.log('Data:', 1, 3, 4)}>😀 😎</Button>
+  ));
+
 const list = [
   { key: 1, value: "One" },
   { key: 2, value: "Two" },
@@ -31,7 +37,22 @@ const list = [
   { key: 4, value: "Four" }
 ];
 
+const groupedList = [
+  {label:'Incoming Payment Methods', children: [
+    { key: 1, value: "One" },
+    { key: 2, value: "Two" },
+    { key: 3, value: "Three" },
+    { key: 4, value: "Four" }
+  ]}, 
+  {label:'Outgoing Payment Methods', children: [
+    { key: 5, value: "Five" },
+    { key: 6, value: "Six" },
+    { key: 7, value: "Seven" }
+  ]}
+]
+
 storiesOf("MultiSelectDropDown", module)
+.addDecorator((storyFn, context) => withConsole()(storyFn)(context))
 .add("Simple list", () => (
   <MultiSelectDropDown
     label="Dropdown simple list 1"
@@ -56,12 +77,58 @@ storiesOf("MultiSelectDropDown", module)
     initialValues={[1,3]}
   />
 ))
-.add("Simple list, both key and value ar shown", () => (
+.add("Simple list, both key and value are shown", () => (
   <MultiSelectDropDown
     label="Dropdown simple list 4"
     hidden={false}
     options={list}
     initialValues={[1,3]}
-    showKey={true}
+    showkey={true}
+  />
+))
+.add("Simple list, hidden", () => (
+  <MultiSelectDropDown
+    label="Dropdown simple list 5"
+    hidden={true}
+    options={list}
+    initialValues={[1,3]}
+  />
+))
+.add("Grouped list, none selected", () => (
+  <MultiSelectDropDown
+    label="Dropdown simple list 6"
+    hidden={false}
+    options={groupedList}
+    grouped={true}
+    showkey={false}
+  />
+))
+.add("Grouped list, items 3 and 7 checked", () => (
+  <MultiSelectDropDown
+    label="Dropdown simple list 6"
+    hidden={false}
+    options={groupedList}
+    grouped={true}
+    showkey={false}
+    initialValues={[3, 7]}
+  />
+))
+.add("Grouped list, both key and value are shown, none selected", () => (
+  <MultiSelectDropDown
+    label="Dropdown simple list 7"
+    hidden={false}
+    options={groupedList}
+    grouped={true}
+    showkey={true}
+  />
+))
+.add("Grouped list, both key and value are shown, items 3 and 7 checked", () => (
+  <MultiSelectDropDown
+    label="Dropdown simple list 6"
+    hidden={false}
+    options={groupedList}
+    grouped={true}
+    showkey={true}
+    initialValues={[3, 7]}
   />
 ));
