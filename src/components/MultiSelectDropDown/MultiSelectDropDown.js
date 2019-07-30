@@ -20,22 +20,20 @@ import Multiselect from 'react-bootstrap-multiselect';
 // }
 
 const MultiSelectDropDown = ({ id, label, hidden, options, initialValues, grouped, ...rest }) => {
-  console.log(options);
   const values = grouped
-    ? options.map(e => ({
-      ...e,
-      children: e.children.map(c => ({
+    ? options.map(o => ({
+      ...o,
+      children: o.children.map(c => ({
         key: c.key,
         value: !!rest.showkey ? `${c.key} - ${c.value}` : c.value,
-        selected: !!initialValues && initialValues.some(v => v && v === c.key)
+        selected: !!initialValues && initialValues.some(i => i && i === c.key)
       }))
     }))
     : options.map(e => ({
-      value: e.key,
-      label: !!rest.showkey ? `${e.key} - ${e.value}` : e.value,
-      selected: !!initialValues && initialValues.some(v => v && v === e.key)
+      value: o.key,
+      label: !!rest.showkey ? `${o.key} - ${o.value}` : o.value,
+      selected: !!initialValues && initialValues.some(i => i && i === o.key)
     }));
-  console.log(values);
   return (
     <div className={cn('form-group row', { hidden })}>
       <label htmlFor={id} className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
